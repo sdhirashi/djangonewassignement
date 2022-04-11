@@ -1,0 +1,43 @@
+version: '3'
+services:
+  # DON'T FORGET TO CHANGE THE XX WITH YOUR PORT
+  # YOUR_USER WITH YOUR UNIX USER
+  postgres_db:
+    image: postgres:14-alpine
+    container_name: "postgres40"
+    environment:
+      - "POSTGRES_PASSWORD=123potato"
+      - "POSTGRES_DB=ligia_diazdb"
+      - "POSTGRES_USER=ligiadiaz"
+    ports:
+      - "10040:5540"
+    volumes:
+      - "/home/ligia_diaz/postgres:/usr/src/postgres"
+    networks:
+      - our-library-net
+    command: -p 5540
+
+  web:
+    build: .
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8040"
+    container_name: "django40"
+    depends_on: 
+      - postgres_db
+    environment:
+      - "PSQL_DBNAME=ligia_diazdb"
+      - "PSQL_USERNAME=ligia_diaz"
+      - "PSQL_PASS=123potato"
+      - "PSQL_HOST=172.24.0.25" # You must use the command of the README.md file in order to get this IP address
+      - "PSQL_PORT=5540"
+    volumes:
+    # "RUTA/DEL/SERVIDOR:RUTA/DENTRO/DEL/CONTENEDOR"
+      - "/home/ligia_diaz/djangoassignment/django-assignment-sdhirashi:/usr/src/django/library"
+    ports:
+      - "9040:8040"
+    networks:
+      - our-library-net
+
+networks:
+  our-library-net:
+    external: true
+    driver: bridge
