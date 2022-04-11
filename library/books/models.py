@@ -5,15 +5,24 @@ class Author(models.Model):
 	name = models.CharField(max_length=128)
 	last_name = models.CharField(max_length=128, null=True)
 
+class Genre(models.Model):
+    genre = models.CharField(max_length=30)
+    description = models.CharField(max_length=300)
+
+class Publisher(models.Model):
+    name = models.CharField(max_length=100)
+
 class Book(models.Model):
 	name = models.CharField(max_length = 256)
-	publish_year = models.SmallIntegerField()
+	published_year = models.SmallIntegerField()
 	pages = models.SmallIntegerField()
 	price = models.DecimalField(max_digits = 6, decimal_places = 2)
 	created_at = models.DateTimeField(auto_now_add=True, null=True)
 	updated_at = models.DateTimeField(auto_now=True,null=True)
-	authors = models.ManyToManyField(Author, through='BooksAuthors')
-	# books_authors = models.OneToOneField(Author, through='BookAuthor')
+	#authors = models.ManyToManyField(Author, through='BooksAuthors')
+	publishername = models.ForeignKey(Publisher, on_delete = models.DO_NOTHING, null=True)
+	books_authors = models.ManyToManyField(Author, through ='BooksAuthors')
+	books_genres = models.ManyToManyField(Genre, through ='BookGenres')
 
 # class BookAuthor(models.Model):
 class BooksAuthors(models.Model):
@@ -22,3 +31,8 @@ class BooksAuthors(models.Model):
 
 	def __str__(self):
 		return f'{self.id}'
+
+#Many to many
+class BookGenres(models.Model):
+    bookname = models.ForeignKey(Book, related_name='BookWithGenre', on_delete = models.DO_NOTHING)
+    selectedgenre = models.ForeignKey(Genre, related_name='GenreWithBook', on_delete =models.DO_NOTHING)
