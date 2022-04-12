@@ -1,27 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<script>
-    let _data = {
-      username:"admin",
-      password:"admin"
+<html>
+  <head>
+    <script>
+        let _data = {
+        username: "admin4",
+        email:"admin4@admin.com",
+        password: "admin34"
+      }
+
+      var logout_json = {
+        access: "",
+        refresh: ""
+      }
+      
+      fetch('http://3.218.67.164:9040/users/login', {
+        method: "POST",
+        body: JSON.stringify(_data),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+      })
+      .then(response => response.json()) 
+      .then(json => console.log('REQUEST1:',json))
+      .catch(err => console.log('ERROR1:',err));
+
+      fetch('http://3.218.67.164:9040/api/token/', {
+        method: "POST",
+        body: JSON.stringify(_data),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+      })
+      .then(response => response.json()) 
+      .then((json) => {
+        logout_json['refresh'] = json['refresh'];
+        logout_json['access'] = json['access'];
+        console.log('REQUEST2:',json);
+      })
+      .catch(err => console.log('ERROR2:',err));
+
+      function logout(){
+      console.log('REQ:',logout_json["refresh"]);
+      bearer = "Bearer "+logout_json["access"];
+      console.log('Bearer ',bearer)
+      fetch('http://3.218.67.164:9040/users/logout', {
+        method: "POST",
+        body: JSON.stringify(logout_json),
+        headers: {
+          "Authorization": bearer,
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+      .then(response => console.log(response))
+      //.then(json => console.log('REQUEST3:',json))
+      .catch(err => console.log('ERROR3:',err));
     }
-    
-    fetch('http://3.218.67.164:9040/api/token/', {
-      method: "POST",
-      body: JSON.stringify(_data),
-      headers: {"Content-type": "application/json; charset=UTF-8"}
-    })
-    .then(response => response.json()) 
-    .then(json => console.log(json))
-    .catch(err => console.log(err));
-</script>
+    </script>
+    </head>
+    <input>
+    <input value="Botton" type="button" onclick="logout()">
 <body>
-    
+
 </body>
 </html>

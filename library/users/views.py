@@ -5,6 +5,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework import permissions
 from library.users.serializers import UserSerializer, RefreshTokenSerializer, GroupSerializer
 from rest_framework.response import Response
+from rest_framework import status
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -42,7 +43,8 @@ class LoginView(APIView):
         response = Response()
 
         response.data = {
-            'id': user.id
+            'id': user.id,
+            'email': user.email
         }
         return response
 
