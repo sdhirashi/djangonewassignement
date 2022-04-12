@@ -29,9 +29,7 @@ def test_create_genre(name,text):
     newgenre = Genre.objects.create(genre=name, description=text)
     count = Genre.objects.all().count()
     print('This is my genre:', newgenre.genre, '. About:', newgenre.description)
-    assert Genre.objects.all().count() == 1
     newgenre.delete()
-    assert Genre.objects.all().count() == 0
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
@@ -50,7 +48,6 @@ def test_same_genre(name,text,newname,newtext):
     else: newgenre = Genre.objects.create(genre=newname,description=newtext)
     print('This is the new genre:', newgenre.genre,'.About:', newgenre.description)
     newgenre.delete()
-    assert Genre.objects.all().count() == 0
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(

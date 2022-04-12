@@ -25,7 +25,7 @@ services:
       - "PSQL_DBNAME=ligia_diazdb"
       - "PSQL_USERNAME=ligia_diaz"
       - "PSQL_PASS=123potato"
-      - "PSQL_HOST=172.24.0.2" # You must use the previous command in order to get this HOST
+      - "PSQL_HOST=172.24.0.7" # You must use the previous command in order to get this HOST
       - "PSQL_PORT=5540"
     volumes:
     # "RUTA/DEL/SERVIDOR:RUTA/DENTRO/DEL/CONTENEDOR"
