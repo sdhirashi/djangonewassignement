@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 def test_user_create():
 	user = User.objects.create_user('test', 'test@test.com', 'test')
 	count = User.objects.all().count()
-	print(count)
+	print('Your current count is:', count)
 	assert User.objects.count() == 1
 	user.delete()
 
