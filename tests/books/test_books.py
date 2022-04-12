@@ -50,6 +50,7 @@ def test_same_genre(name,text,newname,newtext):
     else: newgenre = Genre.objects.create(genre=newname,description=newtext)
     print('This is the new genre:', newgenre.genre,'.About:', newgenre.description)
     newgenre.delete()
+    assert Genre.objects.all().count() == 0
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
@@ -66,6 +67,7 @@ def test_modify_genre(name,text,newname):
     newgenre.genre = newname
     print('This is the modified genre:', newgenre.genre,'.About:', newgenre.description)
     newgenre.delete()
+    assert Genre.objects.all().count() == 0
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
@@ -80,6 +82,7 @@ def test_create_publisher(name):
     publisher = Publisher.objects.create(name = name)
     print('This is the new publisher:', publisher.name)
     publisher.delete()
+    assert Publisher.objects.all().count() == 0
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
@@ -96,6 +99,7 @@ def test_modify_publisher(name,newname):
     publisher.name = newname
     print('This is the modified publisher:', publisher.name)
     publisher.delete()
+    assert Publisher.objects.all().count() == 0
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
@@ -119,6 +123,10 @@ def test_create_bookgenre(publishername,genrename,genretext,bookname,bookpy,book
     genre.delete()
     book.delete()
     bookgenre.delete()
+    assert Genre.objects.all().count() == 0
+    assert Publisher.objects.all().count() == 0
+    assert Book.objects.all().count() == 0
+    assert BookGenres.objects.all().count() == 0
 
 
 
