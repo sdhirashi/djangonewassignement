@@ -125,6 +125,17 @@ def test_create_bookgenre(publishername,genrename,genretext,bookname,bookpy,book
     assert Book.objects.all().count() == 0
     assert BookGenres.objects.all().count() == 0
 
+@pytest.mark.django_db
+def test_author_with_monkey(monkeypatch):
+    #from django.dj.models.query import QuerySet
+    author = Author.objects.create(name='nombre',last_name='apellido')
 
+    def model_count_mock():
+        return 4
+    print(dir(Author.objects))
+    monkeypatch.setattr(Author.objects,'count',model_count_mock)
+
+    assert Author.objects.count() == 4
+    print('Haciendo el monkeypatch')
 
     
