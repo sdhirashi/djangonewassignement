@@ -22,6 +22,13 @@ jobs:
       - name: Build django image
         run: |
           docker build -t my-django-image40:2.0.0 .
-      - name: Run docker containers
+      - name: Run docker container postgres
         run: |
-          docker-compose --env-file .env.stg up --build -d
+          docker-compose --env-file .env.stg up -d postgres_db40
+      - name: Verifying net
+        run: |
+          docker inspect -f "{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}" postgres40
+      - name: Run docker container web
+        run: |
+          docker-compose --env-file .env.stg up -d web40
+
