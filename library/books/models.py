@@ -1,5 +1,10 @@
 from django.db import models
 
+class Thing(models.Model):
+	name = models.CharField(max_length=128)
+	image = models.TextField(null=False)
+
+
 # Create your models here.
 class Author(models.Model):
 	name = models.CharField(max_length=128)
