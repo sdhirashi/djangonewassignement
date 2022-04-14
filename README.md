@@ -1,3 +1,5 @@
+[![Build Status](https://app.travis-ci.com/sdhirashi/djangonewassignement.svg?branch=main)](https://app.travis-ci.com/sdhirashi/djangonewassignement)
+
 # Django-and-Django-REST-Framework
 
 ## Setup
