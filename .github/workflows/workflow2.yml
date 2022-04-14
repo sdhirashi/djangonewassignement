@@ -47,6 +47,4 @@ jobs:
           python manage.py migrate
       - name: Run tests
         run: |
-          pytest test_books.py
-        run: |
-          pytest test_users.py
+          pytest
